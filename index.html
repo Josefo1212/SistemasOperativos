@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planificadores FIFO / LIFO / RR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Sistemas Operativos</p>
+        <h1>Planificadores FIFO, LIFO y Round Robin</h1>
+        <p class="lede">Carga una lista de actividades desde el CSV o agrégalas a mano, elige el quantum y compara los tres métodos. Se calcula <span class="formula">T = tf - ti</span>, <span class="formula">E = T - t</span> e <span class="formula">I = t / T</span> por actividad, sus promedios y el tiempo de cálculo de cada algoritmo.</p>
+      </div>
+      <div class="badge">JS + HTML + CSS</div>
+    </header>
+
+    <section class="panel">
+      <h2>Datos de entrada</h2>
+      <div class="inputs">
+        <div class="card">
+          <h3>Desde CSV</h3>
+          <p class="hint">El archivo debe tener cabecera <code>label,ti,t</code>. El CSV incluido ya tiene datos (en este repo: <code>data.csv</code>, columnas <code>label,x,y</code> equivalen a <code>label,ti,t</code>).</p>
+          <label class="button file-button">
+            <input id="file-input" type="file" accept=".csv" hidden>
+            <span>Seleccionar CSV</span>
+          </label>
+          <button id="load-default" class="button ghost">Cargar data.csv del proyecto</button>
+        </div>
+        <div class="card">
+          <h3>Agregar actividad manual</h3>
+          <form id="add-form" class="form">
+            <label>Etiqueta
+              <input name="label" type="text" required placeholder="A2">
+            </label>
+            <label>ti (tiempo inicial)
+              <input name="ti" type="number" min="0" step="0.01" required>
+            </label>
+            <label>t (duración)
+              <input name="t" type="number" min="0" step="0.01" required>
+            </label>
+            <button class="button" type="submit">Agregar</button>
+          </form>
+        </div>
+        <div class="card narrow">
+          <h3>Parámetros</h3>
+          <label>Quantum (Q) para RR
+            <input id="quantum" type="number" min="0.01" step="0.01" value="4">
+          </label>
+          <button id="run" class="button accent">Calcular</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <div class="table-head">
+          <div>
+            <h3>Actividades cargadas</h3>
+            <p class="hint">Se muestran ordenadas por etiqueta.</p>
+          </div>
+          <button id="clear" class="button ghost">Limpiar lista</button>
+        </div>
+        <table id="input-table">
+          <thead>
+            <tr>
+              <th>Etiqueta</th><th>ti</th><th>t</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel" id="results-panel">
+      <div class="results-head">
+        <div>
+          <h2>Resultados</h2>
+          <p class="hint">Cada bloque muestra tiempos individuales, promedios y duración del cálculo.</p>
+        </div>
+        <div class="best" id="best-summary">Carga datos y presiona Calcular.</div>
+      </div>
+      <div class="algo-grid" id="algo-grid"></div>
+    </section>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
