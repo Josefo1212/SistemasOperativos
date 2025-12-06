@@ -65,8 +65,8 @@ class SimulationPanel extends HTMLElement {
       .map(([name, data]) => this.cardTemplate(name, data))
       .join('');
 
-    // Criterio: Mejor es el que tiene MENOR índice de servicio promedio (I)
-    const sorted = Object.entries(results).sort(([, a], [, b]) => a.avgI - b.avgI);
+    // Criterio: Mejor es el que tiene MAYOR índice de servicio promedio (I)
+    const sorted = Object.entries(results).sort(([, a], [, b]) => b.avgI - a.avgI);
     const [bestName, bestData] = sorted[0];
     bestEl.textContent = `Mejor: ${bestName} (Prom I: ${this.fmt(bestData.avgI)})`;
   }
@@ -97,7 +97,7 @@ class SimulationPanel extends HTMLElement {
           <div class="metric">Prom. T: <strong>${this.fmt(data.avgT)}</strong></div>
           <div class="metric">Prom. E: <strong>${this.fmt(data.avgE)}</strong></div>
           <div class="metric">Prom. I: <strong>${this.fmt(data.avgI)}</strong></div>
-          <div class="metric">Final (tf): <strong>${this.fmt(data.makespan)}</strong></div>
+          <div class="metric">tf Global: <strong>${this.fmt(data.makespan)}</strong></div>
         </div>
         <div class="table-wrap">
           <table>
